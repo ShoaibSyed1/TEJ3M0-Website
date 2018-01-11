@@ -1,200 +1,187 @@
-class Game {
-    constructor() {
-        let canvas = document.querySelector('.game_canvas');
-        this.ctx = canvas.getContext("2d");
-
-        let self = this;
-
-        canvas.addEventListener("mousemove", function(ev) {
-            self.event_mousemove(ev);
-        });
-
-        canvas.addEventListener("mousedown", function(ev) {
-            self.event_click(ev);
-        });
-
-        canvas.addEventListener("mouseup", function(ev) {
-            self.event_mouseup(ev);
-        });
-        
-        this.sceneManager = new SceneManager();
-        
-        this.lastRender = 0.0;
-        this.delta = 0.0;
-    }
-
-    start() {
-        this.sceneManager.push(new SceneTitle());
-    }
-
-    update(timestamp) {
-        this.delta = timestamp - this.lastRender;
-
-        this.sceneManager.update(this.delta);
-
-        this.ctx.clearRect(0, 0, 640, 480);
-
-        this.sceneManager.render(this.ctx);
-
-        this.lastRender = timestamp;
-    }
-
-    event_mousemove(ev) {
-        this.sceneManager.event_mousemove(ev);
-    }
-
-    event_click(ev) {
-        this.sceneManager.event_click(ev);
-    }
-
-    event_mouseup(ev) {
-        this.sceneManager.event_mouseup(ev);
-    }
-}
-
-class SceneManager {
-    constructor() {
-        this.scenes = [];
-    }
-
-    peek() {
-        return this.scenes[this.scenes.length-1];
-    }
-
-    push(scene) {
-        if (this.scenes.length > 0) {
-            let oldScene = this.peek();
-            oldScene.pause();
-        }
-
-        this.scenes.push(scene);
-        scene.start();
-    }
-
-    replace(scene) {
-        let oldScene = this.pop();
-        this.push(scene);
-        return oldScene;
-    }
-
-    pop() {
-        let popScene = this.scenes.pop();
-        popScene.stop();
-
-        let newScene = this.peek();
-        newScene.play();
-
-        return popScene;
-    }
-
-    update(delta) {
-        if (this.scenes.length > 0) {
-            this.peek().update(delta);
-        }
-    }
-
-    render(ctx) {
-        if (this.scenes.length > 0) {
-            this.peek().render(ctx);
-        }
-    }
-
-    event_mousemove(ev) {
-        if (this.scenes.length > 0) {
-            this.peek().event_mousemove(ev);
-        }
-    }
-
-    event_click(ev) {
-        if (this.scenes.length > 0) {
-            this.peek().event_click(ev);
-        }
-    }
-
-    event_mouseup(ev) {
-        if (this.scenes.length > 0) {
-            this.peek().event_mouseup(ev);
-        }
-    }
-}
-
-class Scene {
-    start() {}
-    pause() {}
-    play() {}
-    stop() {}
-
-    update(delta) {}
-    render(ctx) {}
-    
-    event_mousemove(ev) {}
-}
-
-class SceneTitle extends Scene {
-    constructor() {
-        super();
-
-        this.squares = [];
-
-        this.x = 0;
-        this.y = 0;
-
-        this.dragging = false;
-    }
-
-    start() {
-        console.log("Starting Title");
-    }
-
-    pause() {
-        console.log("Pausing Title");
-    }
-
-    play() {
-        console.log("Playing Title");
-    }
-
-    stop() {
-        console.log("Stopping Title");
-    }
-
-    update(delta) {
-        
-    }
-
-    render(ctx) {
-        this.squares.forEach(square => ctx.fillRect(square.x - 32, square.y - 32, 64, 64));
-        ctx.fillRect(this.x - 32, this.y - 32, 64, 64);
-    }
-
-    event_mousemove(ev) {
-        this.x = ev.clientX;
-        this.y = ev.clientY;
-
-        if (this.dragging) {
-            this.squares.push({
-                x: ev.clientX,
-                y: ev.clientY
-            });
-        }
-    }
-
-    event_click(ev) {
-        this.dragging = true;
-        
-    }
-
-    event_mouseup(ev) {
-        this.dragging = false;
-    }
-}
-
-let game = new Game();
-game.start();
+let canvas = document.querySelector('.game_canvas');
+ctx = canvas.getContext("2d");
 
 function loop(timestamp) {
-    game.update(timestamp);
+    update()
     window.requestAnimationFrame(loop);
 }
 
 window.requestAnimationFrame(loop);
+
+const TILE = {
+    NONE: 0,
+    X: 1,
+    O: 2
+};
+
+let gameData = {
+    grid: [
+        [TILE.NONE, TILE.NONE, TILE.NONE],
+        [TILE.NONE, TILE.NONE, TILE.NONE],
+        [TILE.NONE, TILE.NONE, TILE.NONE]
+    ],
+    turn: TILE.X,
+    winner: TILE.NONE,
+    winLine: [[0, 0], [0, 0]],
+    running: true
+};
+
+function update() {
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, 300, 300);
+    
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#000000";
+
+    ctx.beginPath();
+
+    ctx.moveTo(100, 0);
+    ctx.lineTo(100, 300);
+
+    ctx.moveTo(200, 0);
+    ctx.lineTo(200, 300);
+
+    ctx.moveTo(0, 100);
+    ctx.lineTo(300, 100);
+
+    ctx.moveTo(0, 200);
+    ctx.lineTo(300, 200);
+
+    ctx.closePath();
+    ctx.stroke();
+
+    for (let y = 0; y < 3; y++) {
+        for (let x = 0; x < 3; x++) {
+            ctx.beginPath();
+
+            if (gameData.grid[y][x] === TILE.X) {
+                ctx.moveTo(x * 100, y * 100);
+                ctx.lineTo(x * 100 + 100, y * 100 + 100);
+
+                ctx.moveTo(x * 100, y * 100 + 100);
+                ctx.lineTo(x * 100 + 100, y * 100);
+            } else if (gameData.grid[y][x] === TILE.O) {
+                ctx.arc(x * 100 + 50, y * 100 + 50, 50, 0, 2*Math.PI, false);
+            }
+
+            ctx.closePath();
+            ctx.stroke();
+        }
+    }
+
+    if (gameData.running == false) {
+        ctx.lineWidth = 8;
+        ctx.strokeStyle = "#FF1212";
+        ctx.beginPath();
+
+        ctx.moveTo(gameData.winLine[0][0] * 100 + 50, gameData.winLine[0][1] * 100 + 50);
+        ctx.lineTo(gameData.winLine[1][0] * 100 + 50, gameData.winLine[1][1] * 100 + 50);
+
+        ctx.closePath();
+        ctx.stroke();
+
+        let winnerText = "";
+        if (gameData.winner === TILE.X) {
+            winnerText = "X";
+        } else {
+            winnerText = "O";
+        }
+
+        let text = winnerText + " wins!";
+
+        ctx.fillStyle = "#000000";
+        ctx.font = '48px serif';
+
+        let textSize = ctx.measureText(text);
+        ctx.fillText(text, 150 - (textSize.width / 2), 140);
+
+        let restartText = "Click to Restart";
+
+        let restartTextSize = ctx.measureText(restartText);
+        ctx.fillText(restartText, 150 - (restartTextSize.width / 2), 190);
+    }
+}
+
+function checkWin() {
+    for (let y = 0; y < 3; y++) {
+        if (gameData.grid[y].filter(tile => tile == TILE.X).length == 3) {
+            gameData.winner = TILE.X
+            gameData.winLine = [[0, y], [2, y]];
+        } else if (gameData.grid[y].filter(tile => tile == TILE.O).length == 3) {
+            gameData.winner = TILE.O
+            gameData.winLine = [[0, y], [2, y]];
+        }
+    }
+
+    for (let x = 0; x < 3; x++) {
+        if (gameData.grid[0][x] == TILE.X && gameData.grid[1][x] == TILE.X && gameData.grid[2][x] == TILE.X) {
+            gameData.winner = TILE.X
+            gameData.winLine = [[x, 0], [x, 2]];
+        } else if (gameData.grid[0][x] == TILE.O && gameData.grid[1][x] == TILE.O && gameData.grid[2][x] == TILE.O) {
+            gameData.winner = TILE.O;
+            gameData.winLine = [[x, 0], [x, 2]];
+        }
+    }
+
+    if (gameData.grid[0][0] == TILE.X && gameData.grid[1][1] == TILE.X && gameData.grid[2][2] == TILE.X) {
+        gameData.winner = TILE.X
+        gameData.winLine = [[0, 0], [2, 2]];
+    } else if (gameData.grid[2][0] == TILE.X && gameData.grid[1][1] == TILE.X && gameData.grid[0][2] == TILE.X) {
+        gameData.winner = TILE.X
+        gameData.winLine = [[2, 0], [0, 2]];
+    } else if (gameData.grid[0][0] == TILE.O && gameData.grid[1][1] == TILE.O && gameData.grid[2][2] == TILE.O) {
+        gameData.winner = TILE.O
+        gameData.winLine = [[0, 0], [2, 2]];
+    } else if (gameData.grid[2][0] == TILE.O && gameData.grid[1][1] == TILE.O && gameData.grid[0][2] == TILE.O) {
+        gameData.winner = TILE.O
+        gameData.winLine = [[2, 0], [0, 2]];
+    }
+
+    if (gameData.winner != TILE.NONE) {
+        gameData.running = false;
+    }
+
+    for (let y = 0; y < 3; y++) {
+        for (let x = 0; x < 3; x++) {
+            if (gameData.grid[y][x] === TILE.NONE) {
+                return;
+            }
+        }
+    }
+
+    gameData.running = false;
+}
+
+canvas.addEventListener('mouseup', (event) => {
+    let rect = canvas.getBoundingClientRect();
+    pos_x = Math.trunc((event.clientX - rect.left) / 100);
+    pos_y = Math.trunc((event.clientY - rect.top) / 100);
+
+    if (gameData.running) {
+        if (gameData.turn === TILE.X) {
+            if (gameData.grid[pos_y][pos_x] === TILE.NONE) {
+                gameData.grid[pos_y][pos_x] = TILE.X;
+                gameData.turn = TILE.O
+            }
+        } else if (gameData.turn === TILE.O) {
+            if (gameData.grid[pos_y][pos_x] === TILE.NONE) {
+                gameData.grid[pos_y][pos_x] = TILE.O;
+                gameData.turn = TILE.X
+            }
+        }
+
+        checkWin();
+    } else {
+        gameData = {
+            grid: [
+                [TILE.NONE, TILE.NONE, TILE.NONE],
+                [TILE.NONE, TILE.NONE, TILE.NONE],
+                [TILE.NONE, TILE.NONE, TILE.NONE]
+            ],
+            turn: TILE.X,
+            winner: TILE.NONE,
+            winLine: [[0, 0], [0, 0]],
+            running: true
+        };
+    }
+});
