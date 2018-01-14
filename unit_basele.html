@@ -19,15 +19,15 @@
     </div>
     <div class="nav">
         <ul class="navlist">
-            <li><a href="./index.html">Home</a></li>
-            <li><a href="./aboutme.html">About Me</a></li>
-            <li><a href="./career.html">Career</a></li>
-            <li><a href="./contact.html">Contact</a></li>
+            <li><a id="nav_home" href="./index.html">Home</a></li>
+            <li><a id="nav_aboutme" href="./aboutme.html">About Me</a></li>
+            <li><a id="nav_career" href="./career.html">Career</a></li>
+            <li><a id="nav_contact" href="./contact.html">Contact</a></li>
 			<li>
-				<a class="selected nolink">Units</a>
+				<a id="nav_units" class="nolink">Units</a>
 				<ul>
-					<li><a href="./unit_webdev.html"><b><u>Unit 1</u></b><br/>Web Development</a></li>
-					<li><a class="selected"><b><u>Unit 2</u></b><br/>Basic Electronics</a></li>
+					<li><a id="nav_units_webdev" href="./unit_webdev.html"><b><u>Unit 1</u></b><br/>Web Development</a></li>
+					<li><a id="nav_units_basele" href="./unit_basele.html"><b><u>Unit 2</u></b><br/>Basic Electronics</a></li>
 				</ul>
             </li>
             <li class="nav_twitter">
@@ -44,15 +44,22 @@
             </li>
         </ul>
     </div>
-    <div class="content">
-        <div class="main_content">
-			<h1 class="title">Unit 2 - Basic Electronics</h1>
-			<p>
-				Basic Electronics.
-			</p>
-		</div>
-    </div>
-    <footer class="footing">
+<script>
+    document.getElementById("nav_units").classList.add("selected");
+    let elem = document.getElementById("nav_units_basele");
+    elem.classList.add("selected");
+    elem.href = "";
+    elem.removeAttribute("href");
+</script>
+<div class="content">
+    <div class="main_content">
+		<h1 class="title">Unit 2 - Basic Electronics</h1>
+		<p>
+			Basic Electronics.
+		</p>
+	</div>
+</div>
+<footer class="footing">
         <p class="left sep_right">
             Shoaib Syed<br/>
             <br/>

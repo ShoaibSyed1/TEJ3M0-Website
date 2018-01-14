@@ -19,15 +19,15 @@
     </div>
     <div class="nav">
         <ul class="navlist">
-            <li><a class="selected">Home</a></li>
-            <li><a href="./aboutme.html">About Me</a></li>
-            <li><a href="./career.html">Career</a></li>
-            <li><a href="./contact.html">Contact</a></li>
+            <li><a id="nav_home" href="./index.html">Home</a></li>
+            <li><a id="nav_aboutme" href="./aboutme.html">About Me</a></li>
+            <li><a id="nav_career" href="./career.html">Career</a></li>
+            <li><a id="nav_contact" href="./contact.html">Contact</a></li>
 			<li>
-				<a class="nolink">Units</a>
+				<a id="nav_units" class="nolink">Units</a>
 				<ul>
-					<li><a href="./unit_webdev.html"><b><u>Unit 1</u></b><br/>Web Development</a></li>
-					<li><a href="./unit_basele.html"><b><u>Unit 2</u></b><br/>Basic Electronics</a></li>
+					<li><a id="nav_units_webdev" href="./unit_webdev.html"><b><u>Unit 1</u></b><br/>Web Development</a></li>
+					<li><a id="nav_units_basele" href="./unit_basele.html"><b><u>Unit 2</u></b><br/>Basic Electronics</a></li>
 				</ul>
             </li>
             <li class="nav_twitter">
@@ -44,37 +44,44 @@
             </li>
         </ul>
     </div>
-	<img class="head_img" src="./images/main_heading_bg.png"></img>
-    <div class="mainhead heading">
-        <h1 class="title">TEJ3M0-A</h1>
-		<h2 class="name">Shoaib Syed</h2>
+<script>
+    let elem = document.getElementById("nav_home");
+    elem.classList.add("selected");
+    elem.href = "";
+    elem.removeAttribute("href");
+</script>
+<img class="head_img" src="./images/main_heading_bg.png"></img>
+<div class="mainhead heading">
+    <h1 class="title">TEJ3M0-A</h1>
+    <h2 class="name">Shoaib Syed</h2>
+</div>
+<div class="content">
+    <div class="main_content">
+        <h1 class="title">Welcome to my Website</h1>
+        <p style="font-weight: bold"></p>
+        <p>
+            This website will contain info about me, my contact info, my career, and what
+            I've learnt in Computer Engineering.<br/>
+            <br/>
+            Info about me can be found in the 'About Me' page.<br/>
+            My contact info and my school info can be found on my 'Contact' page.<br/>
+            Info about future careers in computer engineering can be found on the 'Contact'
+            page.<br/>
+            The units I am currently learning in computer engineering can be found under
+            the dropdown list 'Units'
+        </p>
+        <br/><br/>
+        <iframe
+            class="vid"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/32oaRnKQPe8?rel=0"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
     </div>
-    <div class="content">
-		<div class="main_content">
-			<h1 class="title">Welcome to my Website</h1>
-			<p style="font-weight: bold"></p>
-            <p>
-                This website will contain info about me, my contact info, my career, and what
-                I've learnt in Computer Engineering.<br/>
-                <br/>
-                Info about me can be found in the 'About Me' page.<br/>
-                My contact info and my school info can be found on my 'Contact' page.<br/>
-                Info about future careers in computer engineering can be found on the 'Contact'
-                page.<br/>
-                The units I am currently learning in computer engineering can be found under
-                the dropdown list 'Units'
-            </p>
-            <iframe
-                class="vid"
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/32oaRnKQPe8?rel=0"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-    <footer class="footing">
+</div>
+<footer class="footing">
         <p class="left sep_right">
             Shoaib Syed<br/>
             <br/>

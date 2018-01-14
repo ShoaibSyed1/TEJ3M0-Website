@@ -1,1 +1,0 @@
-Get-ChildItem -Filter *.html | Copy-Item -Destination { "./$($_.Name.Replace(".html", ".txt"))" }

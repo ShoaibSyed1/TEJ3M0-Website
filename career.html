@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:400,700|Roboto+Mono" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="./css/main.css">
-
-    <link rel="icon" type="image/png" href="./images/favicon.ico">
+	
+	<link rel="icon" type="image/png" href="./images/favicon.ico">
 </head>
 
 <body>
@@ -19,16 +19,16 @@
     </div>
     <div class="nav">
         <ul class="navlist">
-            <li><a href="./index.html">Home</a></li>
-            <li><a href="./aboutme.html">About Me</a></li>
-            <li><a class="selected">Career</a></li>
-            <li><a href="./contact.html">Contact</a></li>
-            <li>
-                <a class="nolink">Units</a>
-                <ul>
-                    <li><a href="./unit_webdev.html"><b><u>Unit 1</u></b><br/>Web Development</a></li>
-                    <li><a href="./unit_basele.html"><b><u>Unit 2</u></b><br/>Basic Electronics</a></li>
-                </ul>
+            <li><a id="nav_home" href="./index.html">Home</a></li>
+            <li><a id="nav_aboutme" href="./aboutme.html">About Me</a></li>
+            <li><a id="nav_career" href="./career.html">Career</a></li>
+            <li><a id="nav_contact" href="./contact.html">Contact</a></li>
+			<li>
+				<a id="nav_units" class="nolink">Units</a>
+				<ul>
+					<li><a id="nav_units_webdev" href="./unit_webdev.html"><b><u>Unit 1</u></b><br/>Web Development</a></li>
+					<li><a id="nav_units_basele" href="./unit_basele.html"><b><u>Unit 2</u></b><br/>Basic Electronics</a></li>
+				</ul>
             </li>
             <li class="nav_twitter">
                 <a onclick="toggle_twitter()">
@@ -44,19 +44,25 @@
             </li>
         </ul>
     </div>
-    <div class="content">
-        <div class="main_content">
-            <h1 class="title">&#x1f4bc; Career</h1>
-            <p>
-                <h2>Computer Programmer &#x1F4BB;</h2>
-                Using programming languages to build various programs.<br/>
-                <br/>
-                <img class="image" src="./images/programming.jpg" width="640" height="300">
-                </img>
-            </p>
-        </div>
+<script>
+    let elem = document.getElementById("nav_career");
+    elem.classList.add("selected");
+    elem.href = "";
+    elem.removeAttribute("href");
+</script>
+<div class="content">
+    <div class="main_content">
+        <h1 class="title">&#x1f4bc; Career</h1>
+        <p>
+            <h2>Computer Programmer &#x1F4BB;</h2>
+            Using programming languages to build various programs.<br/>
+            <br/>
+            <img class="image" src="./images/programming.jpg" width="640" height="300">
+            </img>
+        </p>
     </div>
-    <footer class="footing">
+</div>
+<footer class="footing">
         <p class="left sep_right">
             Shoaib Syed<br/>
             <br/>

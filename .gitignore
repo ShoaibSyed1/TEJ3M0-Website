@@ -1,2 +1,4 @@
 *.txt
 /generator/generated
+/backup
+build.ps1

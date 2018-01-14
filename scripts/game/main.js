@@ -83,8 +83,11 @@ function update() {
         let winnerText = "";
         if (gameData.winner === TILE.X) {
             winnerText = "X";
-        } else {
+        } else if (gameData.winner === TILE.O) {
             winnerText = "O";
+        } else {
+            console.log(gameData.winner);
+            winnerText = "No one";
         }
 
         let text = winnerText + " wins!";
