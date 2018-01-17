@@ -28,7 +28,8 @@ top = '''<!DOCTYPE <!DOCTYPE html>
 				<ul>
 					<li><a id="nav_units_webdev" href="./unit_webdev.html"><b><u>Unit 1</u></b><br/>Web Development</a></li>
 					<li><a id="nav_units_basele" href="./unit_basele.html"><b><u>Unit 2</u></b><br/>Basic Electronics</a></li>
-				</ul>
+                    <li><a id="nav_units_dlogic" href="./unit_dlogic.html"><b><u>Unit 3</u></b><br/>Digital Logic</a></li>
+                </ul>
             </li>
             <li class="nav_twitter">
                 <a onclick="toggle_twitter()">

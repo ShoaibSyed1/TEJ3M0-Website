@@ -23,7 +23,7 @@ pages = filter(lambda x: x.endswith(".html"), os.listdir(sys.argv[2]))
 
 for page_path in pages:
     page = ""
-    with open(page_path) as file:
+    with open(sys.argv[2] + page_path) as file:
         page = file.read()
 
     new_page = apply_template(template, page)
